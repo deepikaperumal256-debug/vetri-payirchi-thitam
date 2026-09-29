@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FitBuddy - Admin Dashboard
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <a
+        href="/"
+        class="brand"
+    >
+        FitBuddy
+    </a>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="container wide">
+
+
+    <section class="card">
+
+
+        <h1>
+            All Users
+        </h1>
+
+
+        <p class="muted">
+
+            Local development admin dashboard.
+
+        </p>
+
+
+
+        <div class="table-wrap">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            User ID
+                        </th>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>
+                            Age
+                        </th>
+
+                        <th>
+                            Weight
+                        </th>
+
+                        <th>
+                            Goal
+                        </th>
+
+                        <th>
+                            Intensity
+                        </th>
+
+                        <th>
+                            Updated Plan
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                {% for user in users %}
+
+
+                    <tr>
+
+
+                        <td>
+                            {{ user.user_id }}
+                        </td>
+
+
+                        <td>
+                            {{ user.username }}
+                        </td>
+
+
+                        <td>
+                            {{ user.age }}
+                        </td>
+
+
+                        <td>
+                            {{ user.weight }}
+                        </td>
+
+
+                        <td>
+                            {{ user.goal|title }}
+                        </td>
+
+
+                        <td>
+                            {{ user.intensity|title }}
+                        </td>
+
+
+                        <td>
+
+                            {% if user.plan
+                                  and user.plan.updated_plan %}
+
+                                Yes
+
+                            {% else %}
+
+                                No
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+
+                            <form
+                                action="/admin/delete-user"
+                                method="post"
+                                onsubmit="return confirm('Delete this user and plan?')"
+                            >
+
+
+                                <input
+                                    type="hidden"
+                                    name="user_id"
+                                    value="{{ user.user_id }}"
+                                >
+
+
+                                <input
+                                    type="hidden"
+                                    name="admin_key"
+                                    value="{{ admin_key }}"
+                                >
+
+
+                                <button
+                                    type="submit"
+                                    class="danger"
+                                >
+
+                                    Delete
+
+                                </button>
+
+
+                            </form>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% else %}
+
+
+                    <tr>
+
+                        <td colspan="8">
+
+                            No users found.
+
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>
